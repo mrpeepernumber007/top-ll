@@ -48,6 +48,11 @@ class LinkedList {
         return this.traverse().current
     }
     at(index) {
+        if(this.size() < index) {
+            alert('Index too high')
+        } else if (index < 0) {
+            alert('Index too low')
+        }
         const returned = this.traverse(0, this.pointer, index)
         return returned
     }
@@ -79,6 +84,26 @@ class LinkedList {
         message += 'null'
         return message
     }
+    insertAt(value, index) {
+        if((this.size() + 1) === index) {
+            this.append(value)
+            return
+        } else if (this.size() + 1 < index) {
+            alert('Index too high')
+        } else if (index < 0) {
+            alert('Index too low')
+        }
+        if(index === 0) {
+            this.prepend(value)
+        }
+        let newNode = new Node(value, null)
+        let nextNode = this.at(index)
+        this.at(index - 1).next = newNode
+        newNode.next = nextNode
+    }
+    removeAt(index) {
+        this.at(index - 1).next = this.at(index + 1)
+    }
 }
 
 const firstNode = new Node('Peperino')
@@ -87,7 +112,6 @@ listOne.prepend('Bananin')
 listOne.prepend('Cacoso')
 listOne.append('Linguo')
 
-// listOne.pop()
 console.log(
     listOne.toString()
 );
