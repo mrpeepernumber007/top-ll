@@ -10,7 +10,6 @@ class LinkedList {
         this.pointer = pointer
     }
     traverse(counter = 0, current = this.pointer, givenIndex, givenValue) {
-        // console.log(givenValue);
         if((current.value === givenValue) && givenValue != undefined) {
             return { counter, current }
         }
@@ -57,13 +56,16 @@ class LinkedList {
         const selected = this.at(listSize - 2)
         selected.next = null
     }
-    contains(query) {
-        const searchObject= this.traverse(0, this.pointer, undefined, query)
-        if(searchObject.current.value === query) {
-            console.log(searchObject.current.value);
-            return true
-        } 
-        return false
+    contains(query, toFind = false) {
+        const returnedQuery = this.traverse(0, this.pointer, undefined, query)
+        const searchResult = returnedQuery.current.value === query
+        if(toFind) {
+            return returnedQuery.counter
+        }
+        return searchResult
+    }
+    find(query) {
+        return this.contains(query, true)
     }
 }
 
@@ -75,6 +77,5 @@ listOne.append('Linguo')
 
 // listOne.pop()
 console.log(
-    listOne.contains('Linguo')
-    // listOne.tail()
+    listOne.find('Linguo')
 );
