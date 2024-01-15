@@ -10,12 +10,11 @@ class LinkedList {
         this.pointer = pointer
     }
     traverse(counter = 0, current = this.pointer, givenIndex) {
-        
         if(current.next === null) {
             return { counter, current }
         }
 
-        if(givenIndex === counter) {
+        if((givenIndex === counter) && givenIndex != undefined) {
             return current
         }
 
@@ -27,14 +26,15 @@ class LinkedList {
     }
     append(value) {
         const newNode = new Node(value, null)
-        
+        const previousNode = this.tail()
+        previousNode.next = newNode
     }
     prepend(value) {
         const newNode = new Node(value, this.pointer)
         this.pointer = newNode
     }
     size() {
-        const listSize = this.traverse().counter
+        const listSize = this.traverse().counter + 1
         return listSize
     }
     head(){
@@ -49,9 +49,8 @@ class LinkedList {
     }
     pop() {
         const listSize = this.size()
-        const selected = this.at(listSize - 1)
-        console.log(selected);
-        selected.next = 'null'
+        const selected = this.at(listSize - 2)
+        selected.next = null
     }
 }
 
@@ -59,8 +58,9 @@ const firstNode = new Node('Peperino')
 const listOne = new LinkedList(firstNode)
 listOne.prepend('Bananin')
 listOne.prepend('Cacoso')
+listOne.append('Linguo')
 
-const result = listOne.traverse()
+listOne.pop()
 console.log(
-    result
+    listOne.tail()
 );
