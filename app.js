@@ -67,6 +67,18 @@ class LinkedList {
     find(query) {
         return this.contains(query, true)
     }
+    toString() {
+        let message = ''
+        let index = 0
+        let node
+        do {
+            node = this.at(index)
+            message += ` ( ${node.value} ) -> `
+            index++
+        } while(node.next != null)
+        message += 'null'
+        return message
+    }
 }
 
 const firstNode = new Node('Peperino')
@@ -77,5 +89,5 @@ listOne.append('Linguo')
 
 // listOne.pop()
 console.log(
-    listOne.find('Linguo')
+    listOne.toString()
 );
