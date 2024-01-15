@@ -9,20 +9,25 @@ class LinkedList {
     constructor (pointer) {
         this.pointer = pointer
     }
-    traverse(counter = 0, current = this.pointer, givenIndex) {
-        if(current.next === null) {
+    traverse(counter = 0, current = this.pointer, givenIndex, givenValue) {
+        // console.log(givenValue);
+        if((current.value === givenValue) && givenValue != undefined) {
             return { counter, current }
         }
-
+        
         if((givenIndex === counter) && givenIndex != undefined) {
             return current
+        }
+        
+        if(current.next === null) {
+            return { counter, current }
         }
 
         let forward = current.next
         current = forward
         counter++
         
-        return this.traverse(counter, current, givenIndex)
+        return this.traverse(counter, current, givenIndex, givenValue)
     }
     append(value) {
         const newNode = new Node(value, null)
@@ -34,7 +39,7 @@ class LinkedList {
         this.pointer = newNode
     }
     size() {
-        const listSize = this.traverse().counter + 1
+        const listSize = this.traverse().counter
         return listSize
     }
     head(){
@@ -48,9 +53,17 @@ class LinkedList {
         return returned
     }
     pop() {
-        const listSize = this.size()
+        const listSize = this.size() + 1 //test with -3 in the next line
         const selected = this.at(listSize - 2)
         selected.next = null
+    }
+    contains(query) {
+        const searchObject= this.traverse(0, this.pointer, undefined, query)
+        if(searchObject.current.value === query) {
+            console.log(searchObject.current.value);
+            return true
+        } 
+        return false
     }
 }
 
@@ -60,7 +73,8 @@ listOne.prepend('Bananin')
 listOne.prepend('Cacoso')
 listOne.append('Linguo')
 
-listOne.pop()
+// listOne.pop()
 console.log(
-    listOne.tail()
+    listOne.contains('Linguo')
+    // listOne.tail()
 );
